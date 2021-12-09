@@ -57,9 +57,6 @@ index = min(which(explained >= .999))
 abline(v = index, col='red', lty=2)
 text(index, .999, index, cex=2)
 
-
-
-
 # using 1st 2 PCs
 approxFace(s, 2)
 
@@ -67,9 +64,11 @@ approxFace(s, 2)
 approxFace(s, 5)
 
 # compare across PC: meant for the Picard image.
+png("picard_SVD.png", width = 708, height = 970)  # uncomment to save the output to disk
 par(mfrow=c(3,2))
 for(i in c(2, 10, 21, 48, 96, ncol(s$u))) {
     approxFace(s, i)
 }
+dev.off()
 
 par(mfrow=c(1,1))
