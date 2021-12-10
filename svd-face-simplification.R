@@ -4,15 +4,18 @@
 # Only works with square images.
 
 library(png)
-colors = colorRampPalette(c("#000011", "#FFDDDD")) # slightly more interesting than Black&White
+# colors = colorRampPalette(c("#000011", "#FFDDDD"))
+colors = colorRampPalette(c("#000000", "#FFFFFF"))
 
 # displays a matrix as an image, in the correct orientation and aspect ratio
 showImage <- function(img, label="") {
     # asp=1 forces 1x1 aspect ratio for 'pixels'
     image(t(img)[, ncol(img):1], col = colors(255),
           main = label,
+          cex.main = 2,
           asp = 1,
-          )
+          xaxt = 'n',
+          yaxt = 'n')
 }
 
 # Display an approximation of the image using n principal components.
@@ -58,17 +61,19 @@ abline(v = index, col='red', lty=2)
 text(index, .999, index, cex=2)
 
 # using 1st 2 PCs
+# png("pc-graph.png", width=906, height=906)
+# par(mar = c(0,0,0,0))
 approxFace(s, 2)
-
+# dev.off()
 # using 1st 5 PCs
 approxFace(s, 5)
 
 # compare across PC: meant for the Picard image.
 png("picard_SVD.png", width = 708, height = 970)  # uncomment to save the output to disk
-par(mfrow=c(3,2))
+par(mfrow=c(3,2), mar=c(1,1,2.5,1))
 for(i in c(2, 10, 21, 48, 96, ncol(s$u))) {
     approxFace(s, i)
 }
 dev.off()
 
-par(mfrow=c(1,1))
+par(mfrow=c(1, 1), mar = c(5.1, 4.1, 4.1, 2.1))
